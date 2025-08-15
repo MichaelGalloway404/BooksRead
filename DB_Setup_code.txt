@@ -1,0 +1,136 @@
+
+CREATE DATABASE booktracker;
+USE booktracker;
+
+-- Users table
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Books table (books belong to a specific user)
+CREATE TABLE books (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  author VARCHAR(255) NOT NULL,
+  cover_url TEXT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  UNIQUE KEY unique_user_book (user_id, title, author),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Users table
+mysql> CREATE TABLE users (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   username VARCHAR(100) NOT NULL UNIQUE,
+    ->   password VARCHAR(255) NOT NULL
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql>
+mysql> -- Books table (books belong to a specific user)
+mysql> CREATE TABLE books (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   user_id INT NOT NULL,
+    ->   author VARCHAR(255) NOT NULL,
+    ->   cover_url TEXT NOT NULL,
+    ->   title VARCHAR(255) NOT NULL,
+    ->   UNIQUE KEY unique_user_book (user_id, title, author),
+    ->   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql>
+mysql> CREATE DATABASE booktracker;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> USE booktracker;
+Database changed
+mysql>
+mysql> -- Users table
+mysql> CREATE TABLE users (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   username VARCHAR(100) NOT NULL UNIQUE,
+    ->   password VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+mysql> -- Books table (books belong to a specific user)
+mysql> CREATE TABLE books (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   user_id INT NOT NULL,
+    ->   author VARCHAR(255) NOT NULL,
+    ->   cover_url TEXT NOT NULL,
+    ->   title VARCHAR(255) NOT NULL,
+    ->   UNIQUE KEY unique_user_book (user_id, title, author),
+    ->   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO users (username, password) VALUES ('mike', '1234');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT id FROM users WHERE username = 'mike';
++----+
+| id |
++----+
+|  1 |
++----+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO books (user_id, author, title, cover_url)
+    -> VALUES (1, 'Stephen King', '9781587672705', 'https://covers.openlibrary.org/b/isbn/9781587672705-M.jpg');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+
+
+
+
+
+// bookTitle.trim(): Removes leading and trailing spaces from the input string.
+// /^\d{10,13}$/: This is a regular expression (regex) that matches a string made up of only digits and whose length is between 10 and 13 digits, inclusive.
+//     ^ – Start of string     \d{10,13} – 10 to 13 digits     $ – End of string
+// .test(...): Tests if the trimmed bookTitle matches the regex pattern. It returns true if it does, false otherwise.
+// const isDirectIsbn = ...: Stores the result (true or false) in the isDirectIsbn variable.
+
+
+
+
+ALTER TABLE users ADD COLUMN logged_in BOOLEAN DEFAULT 0;
+; then dropped it with 
+ALTER TABLE users DROP COLUMN logged_in;
